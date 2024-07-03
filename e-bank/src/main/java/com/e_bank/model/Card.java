@@ -1,5 +1,8 @@
 package com.e_bank.model;
 
+import com.e_bank.enums.CardTier;
+import com.e_bank.enums.CardType;
+import com.e_bank.enums.NetworkType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,6 +23,9 @@ public class Card {
     private Integer cvv;
     private Date expirationDate;
     private Boolean status;
+    private CardType type;
+    private NetworkType network;
+    private CardTier tier;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;

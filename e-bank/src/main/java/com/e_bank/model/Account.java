@@ -1,5 +1,6 @@
 package com.e_bank.model;
 
+import com.e_bank.enums.AccountType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +19,7 @@ public class Account {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
-    private String type;
+    private AccountType type;
     private Double balance;
     private Date date;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
