@@ -3,6 +3,7 @@ package com.e_bank.service;
 import com.e_bank.exception.BeneficiaryNotFoundException;
 import com.e_bank.model.Beneficiary;
 import com.e_bank.repository.BeneficiaryRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

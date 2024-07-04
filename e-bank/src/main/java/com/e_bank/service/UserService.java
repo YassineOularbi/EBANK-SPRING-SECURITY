@@ -1,5 +1,8 @@
 package com.e_bank.service;
 
+import com.e_bank.dto.UserDto;
+import com.e_bank.exception.UserNotFoundException;
+import com.e_bank.mapper.UserMapper;
 import com.e_bank.model.User;
 import com.e_bank.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +14,26 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
-    public List<User> getAll(){
-        return userRepository.findAll();
+    @Autowired
+    private UserMapper userMapper;
+    public List<UserDto> getAll(){
+        return userMapper.toUserDtos(userRepository.findAll());
     }
-    public User save(User user){
-        return userRepository.save(user);
+    public UserDto save(UserDto userDto) {
+        var user = userMapper.toUser(userDto);
+        return userMapper.toUserDto(userRepository.save(user));
     }
-    public User getById(Long id){
-        return userRepository.findById(id).orElseThrow();
+    public UserDto update(UserDto userDto, Long id){
+        var user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+        var userUpdated = userMapper.updateUserFromDto(userDto, user);
+        return userMapper.toUserDto(userRepository.save(userUpdated));
+    }
+    public UserDto getById(Long id){
+        return userMapper.toUserDto(userRepository.findById(id).orElseThrow(UserNotFoundException::new));
     }
     public User delete(Long id){
-        userRepository.deleteById(id);
-        return userRepository.findById(id).orElseThrow();
+        var user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+        userRepository.delete(user);
+        return user;
     }
 }

@@ -20,6 +20,6 @@ public class User {
     private String name;
     private String mail;
     private String phone;
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private Set<Account> accounts;
 }

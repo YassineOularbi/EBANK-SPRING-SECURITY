@@ -3,11 +3,11 @@ package com.e_bank.service;
 import com.e_bank.exception.CardNotFoundException;
 import com.e_bank.model.Card;
 import com.e_bank.repository.CardRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 @Service
 public class CardService {
     @Autowired

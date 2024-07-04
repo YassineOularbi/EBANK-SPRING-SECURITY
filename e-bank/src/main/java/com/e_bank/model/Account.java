@@ -22,8 +22,8 @@ public class Account {
     private AccountType type;
     private Double balance;
     private Date date;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="user_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name="user_id")
     private User user;
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Card> cards;

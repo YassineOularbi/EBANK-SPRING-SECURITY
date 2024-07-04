@@ -3,11 +3,11 @@ package com.e_bank.service;
 import com.e_bank.exception.TransactionNotFoundException;
 import com.e_bank.model.Transaction;
 import com.e_bank.repository.TransactionRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 @Service
 public class TransactionService {
     @Autowired
