@@ -1,32 +1,52 @@
 package com.e_bank.service;
 
+import com.e_bank.dto.AccountClosingDto;
+import com.e_bank.dto.AccountDto;
 import com.e_bank.exception.AccountNotFoundException;
-import com.e_bank.model.Account;
+import com.e_bank.mapper.AccountMapper;
 import com.e_bank.repository.AccountRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 @Service
 public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private AccountMapper accountMapper;
 
-    public List<Account> getAll(){
-        return accountRepository.findAll();
+    public List<AccountDto> getAll(){
+        return accountMapper.toAccountDtos(accountRepository.findAll());
+    }
+    public List<AccountDto> getAllByUser(Long id){
+        return accountMapper.toAccountDtos(accountRepository.getAccountByUser_Id(id));
     }
 
-    public Account save(Account account) {
-        return accountRepository.save(account);
+    public AccountDto save(AccountDto accountDto) {
+        var account = accountMapper.toAccount(accountDto);
+        account.setDate(Date.valueOf(LocalDate.now()));
+        return accountMapper.toAccountDto(accountRepository.save(account));
+    }
+    public AccountDto update(AccountDto accountDto, Long id){
+        var account = accountRepository.findById(id).orElseThrow(AccountNotFoundException::new);
+        var accountUpdated = accountMapper.updateAccountFromDto(accountDto, account);
+        return accountMapper.toAccountDto(accountRepository.save(accountUpdated));
+    }
+    public AccountDto getById(Long id) {
+        return accountMapper.toAccountDto(accountRepository.findById(id).orElseThrow(AccountNotFoundException::new));
     }
 
-    public Account getById(Long id) {
-        return accountRepository.findById(id).orElseThrow(AccountNotFoundException::new);
+    public AccountDto delete(Long id) {
+        var account = accountRepository.findById(id).orElseThrow(AccountNotFoundException::new);
+        accountRepository.delete(account);
+        return accountMapper.toAccountDto(account);
     }
-
-    public Account delete(Long id) {
-        accountRepository.deleteById(id);
-        return accountRepository.findById(id).orElseThrow(AccountNotFoundException::new);
+    public AccountDto close(AccountClosingDto accountDto, Long id){
+        var account = accountRepository.findById(id).orElseThrow(AccountNotFoundException::new);
+        var accountUpdated = accountMapper.updateAccountFromClosingDto(accountDto, account);
+        return  accountMapper.toAccountDto(accountRepository.save(accountUpdated));
     }
 }

@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,6 +20,6 @@ public class User {
     private String name;
     private String mail;
     private String phone;
-    @OneToMany(mappedBy = "user")
-    private Set<Account> accounts;
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<Account> accounts;
 }

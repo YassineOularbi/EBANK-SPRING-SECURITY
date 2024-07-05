@@ -3,14 +3,15 @@ package com.e_bank.service;
 import com.e_bank.dto.UserDto;
 import com.e_bank.exception.UserNotFoundException;
 import com.e_bank.mapper.UserMapper;
-import com.e_bank.model.User;
 import com.e_bank.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class UserService {
     @Autowired
     private UserRepository userRepository;
@@ -31,9 +32,9 @@ public class UserService {
     public UserDto getById(Long id){
         return userMapper.toUserDto(userRepository.findById(id).orElseThrow(UserNotFoundException::new));
     }
-    public User delete(Long id){
+    public UserDto delete(Long id){
         var user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         userRepository.delete(user);
-        return user;
+        return userMapper.toUserDto(user);
     }
 }

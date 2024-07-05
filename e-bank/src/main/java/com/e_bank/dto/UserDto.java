@@ -1,9 +1,12 @@
 package com.e_bank.dto;
 
+import com.e_bank.model.Account;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
