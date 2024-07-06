@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
+
+import static net.andreinc.mockneat.unit.financial.IBANs.ibans;
+
 @Service
 public class AccountService {
     @Autowired
@@ -18,9 +21,9 @@ public class AccountService {
     @Autowired
     private AccountMapper accountMapper;
 
-    public List<AccountDto> getAll(){
-        return accountMapper.toAccountDtos(accountRepository.findAll());
-    }
+//    public List<AccountDto> getAll(){
+//        return accountMapper.toAccountDtos(accountRepository.findAll());
+//    }
     public List<AccountDto> getAllByUser(Long id){
         return accountMapper.toAccountDtos(accountRepository.getAccountByUser_Id(id));
     }
@@ -28,6 +31,8 @@ public class AccountService {
     public AccountDto save(AccountDto accountDto) {
         var account = accountMapper.toAccount(accountDto);
         account.setDate(Date.valueOf(LocalDate.now()));
+        account.setIsClosed(false);
+        account.setIBAN(ibans().get());
         return accountMapper.toAccountDto(accountRepository.save(account));
     }
     public AccountDto update(AccountDto accountDto, Long id){
@@ -47,6 +52,7 @@ public class AccountService {
     public AccountDto close(AccountClosingDto accountDto, Long id){
         var account = accountRepository.findById(id).orElseThrow(AccountNotFoundException::new);
         var accountUpdated = accountMapper.updateAccountFromClosingDto(accountDto, account);
+        accountUpdated.setIsClosed(true);
         return  accountMapper.toAccountDto(accountRepository.save(accountUpdated));
     }
 }

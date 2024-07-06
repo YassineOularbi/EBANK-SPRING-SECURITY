@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Date;
 @Entity
@@ -21,11 +22,14 @@ public class Card {
     private Long id;
     private Long number;
     private Integer cvv;
+    @DateTimeFormat(pattern = "MM-YY")
     private Date expirationDate;
-    private Boolean status;
+    private Boolean isActivated;
     private CardType type;
     private NetworkType network;
     private CardTier tier;
+    private Boolean isBlocked;
+    private String BlockingReason;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;

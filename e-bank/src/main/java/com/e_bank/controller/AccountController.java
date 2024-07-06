@@ -15,10 +15,10 @@ import java.util.List;
 public class AccountController {
     @Autowired
     private AccountService accountService;
-    @GetMapping("get-all")
-    public ResponseEntity<List<AccountDto>> getAll(){
-        return ResponseEntity.ok(accountService.getAll());
-    }
+//    @GetMapping("get-all")
+//    public ResponseEntity<List<AccountDto>> getAll(){
+//        return ResponseEntity.ok(accountService.getAll());
+//    }
     @GetMapping("get-by-id/{id}")
     public ResponseEntity<AccountDto> getById(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.FOUND).body(accountService.getById(id));

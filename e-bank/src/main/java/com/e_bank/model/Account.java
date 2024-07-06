@@ -22,7 +22,8 @@ public class Account {
     private AccountType type;
     private Double balance;
     private Date date;
-    private Boolean closed;
+    private String IBAN;
+    private Boolean isClosed;
     private String closingReason;
     @ManyToOne
     @JoinColumn(name="user_id")

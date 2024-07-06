@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountClosingDto {
-    private String closingReason;
+public class CardStatusDto {
+    private Boolean isActivated;
 }
