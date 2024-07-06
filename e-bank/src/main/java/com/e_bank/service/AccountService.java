@@ -50,7 +50,7 @@ public class AccountService {
         return accountMapper.toAccountDto(account);
     }
     public AccountDto close(AccountClosingDto accountDto, Long id){
-        var account = accountRepository.findById(id).orElseThrow(AccountNotFoundException::new);
+        var account = accountRepository.findByIdAndBalanceEquals(id, 0.00);
         var accountUpdated = accountMapper.updateAccountFromClosingDto(accountDto, account);
         accountUpdated.setIsClosed(true);
         return  accountMapper.toAccountDto(accountRepository.save(accountUpdated));
