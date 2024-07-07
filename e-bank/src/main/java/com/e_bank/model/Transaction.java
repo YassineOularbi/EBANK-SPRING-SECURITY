@@ -1,5 +1,7 @@
 package com.e_bank.model;
 
+import com.e_bank.enums.TransactionContext;
+import com.e_bank.enums.TransactionMethod;
 import com.e_bank.enums.TransactionType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,7 +25,18 @@ public class Transaction {
     private Time time;
     private String description;
     private TransactionType type;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "account_id", nullable = false)
+    private TransactionContext context;
+    private TransactionMethod method;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id")
     private Account account;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "internal_account_id")
+    private Account internalAccount;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "beneficiary_id")
+    private Beneficiary beneficiary;
+    @ManyToOne(fetch =  FetchType.LAZY)
+    @JoinColumn(name = "card_id")
+    private Card card;
 }

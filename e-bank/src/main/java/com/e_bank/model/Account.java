@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,9 +29,9 @@ public class Account {
     @JoinColumn(name="user_id")
     private User user;
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Card> cards;
+    private List<Card> cards;
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Transaction> transactions;
+    private List<Transaction> transactions;
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Beneficiary> beneficiaries;
+    private List<Beneficiary> beneficiaries;
 }
