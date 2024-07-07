@@ -3,6 +3,7 @@ package com.e_bank.model;
 import com.e_bank.enums.CardTier;
 import com.e_bank.enums.CardType;
 import com.e_bank.enums.NetworkType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,9 +33,11 @@ public class Card {
     private CardTier tier;
     private Boolean isBlocked;
     private String BlockingReason;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "account_id", nullable = false)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "account_id")
     private Account account;
-    @OneToMany(mappedBy = "card", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "card", fetch = FetchType.EAGER)
     private List<Transaction> transactions;
 }

@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
     List<Account> getAccountByUser_Id(Long id);
-    Account findByIdAndBalanceEquals(Long id, Double balance);
 }

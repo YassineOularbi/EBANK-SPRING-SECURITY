@@ -1,6 +1,7 @@
 package com.e_bank.model;
 
 import com.e_bank.enums.AccountType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,13 +26,14 @@ public class Account {
     private String IBAN;
     private Boolean isClosed;
     private String closingReason;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
-    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "account")
     private List<Card> cards;
-    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "account")
     private List<Transaction> transactions;
-    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "account")
     private List<Beneficiary> beneficiaries;
 }

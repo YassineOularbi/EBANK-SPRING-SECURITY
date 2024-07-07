@@ -1,6 +1,7 @@
 package com.e_bank.service;
 
 import com.e_bank.dto.UserDto;
+import com.e_bank.exception.DatabaseEmptyException;
 import com.e_bank.exception.UserNotFoundException;
 import com.e_bank.mapper.UserMapper;
 import com.e_bank.model.User;
@@ -19,21 +20,25 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
     public List<User> getAll(){
-        return userRepository.findAll();
+        var users = userRepository.findAll();
+        if (users.isEmpty()){
+            throw new DatabaseEmptyException();
+        }
+        return users;
     }
     public UserDto save(UserDto userDto) {
         var user = userMapper.toUser(userDto);
         return userMapper.toUserDto(userRepository.save(user));
     }
-    public UserDto update(UserDto userDto, Long id){
+    public UserDto update(UserDto userDto, Long id) throws UserNotFoundException{
         var user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         var userUpdated = userMapper.updateUserFromDto(userDto, user);
         return userMapper.toUserDto(userRepository.save(userUpdated));
     }
-    public UserDto getById(Long id){
-        return userMapper.toUserDto(userRepository.findById(id).orElseThrow(UserNotFoundException::new));
+    public User getById(Long id) throws UserNotFoundException{
+        return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
-    public UserDto delete(Long id){
+    public UserDto delete(Long id) throws UserNotFoundException{
         var user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         userRepository.delete(user);
         return userMapper.toUserDto(user);

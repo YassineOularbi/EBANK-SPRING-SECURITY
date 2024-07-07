@@ -1,5 +1,6 @@
 package com.e_bank.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,6 +21,6 @@ public class User {
     private String name;
     private String mail;
     private String phone;
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user")
     private List<Account> accounts;
 }

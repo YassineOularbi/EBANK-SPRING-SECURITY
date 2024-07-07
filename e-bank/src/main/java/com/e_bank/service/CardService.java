@@ -5,7 +5,9 @@ import com.e_bank.dto.CardDto;
 import com.e_bank.dto.CardStatusDto;
 import com.e_bank.enums.NetworkType;
 import com.e_bank.exception.CardNotFoundException;
+import com.e_bank.exception.DatabaseEmptyException;
 import com.e_bank.mapper.CardMapper;
+import com.e_bank.model.Card;
 import com.e_bank.repository.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,19 +28,23 @@ public class CardService {
 //    public List<Card> getAll(){
 //        return cardRepository.findAll();
 //    }
-    public List<CardDto> getAllByAccount(Long id){
-        return cardMapper.toDtos(cardRepository.findAllByAccount_Id(id));
+    public List<Card> getAllByAccount(Long id){
+        var cards = cardRepository.findAllByAccount_Id(id);
+        if (cards.isEmpty()){
+            throw new DatabaseEmptyException();
+        }
+        return cards;
     }
-    public CardDto save(CardDto cardDto){
+    public CardDto save(CardDto cardDto) {
         var card = cardMapper.toCard(cardDto);
-        if (card.getNetwork().equals(NetworkType.VISA)){
+        if (card.getNetwork().equals(NetworkType.VISA)) {
             do {
                 card.setNumber(Long.valueOf(creditCards().visa().get()));
-            } while (cardRepository.findCardByNumberEquals(card.getNumber()));
-        } else if (card.getNetwork().equals(NetworkType.MasterCard)){
+            } while (cardRepository.existsByNumber(card.getNumber()));
+        } else if (card.getNetwork().equals(NetworkType.MasterCard)) {
             do {
                 card.setNumber(Long.valueOf(creditCards().masterCard().get()));
-            } while (cardRepository.findCardByNumberEquals(card.getNumber()));
+            } while (cardRepository.existsByNumber(card.getNumber()));
         }
         card.setCvv(Integer.valueOf(cvvs().get()));
         card.setExpirationDate(Date.valueOf(LocalDate.now().plusYears(3)));
@@ -46,8 +52,8 @@ public class CardService {
         card.setIsBlocked(false);
         return cardMapper.toDto(cardRepository.save(card));
     }
-    public CardDto getById(Long id){
-        return cardMapper.toDto(cardRepository.findById(id).orElseThrow(CardNotFoundException::new));
+    public Card getById(Long id){
+        return cardRepository.findById(id).orElseThrow(CardNotFoundException::new);
     }
     public CardDto delete(Long id){
         var card = cardRepository.findById(id).orElseThrow(CardNotFoundException::new);
@@ -63,6 +69,7 @@ public class CardService {
         var card = cardRepository.findById(id).orElseThrow(CardNotFoundException::new);
         var cardUpdated = cardMapper.blockCard(cardDto, card);
         cardUpdated.setIsActivated(false);
+        cardUpdated.setIsBlocked(true);
         return cardMapper.toDto(cardRepository.save(cardUpdated));
     }
 }

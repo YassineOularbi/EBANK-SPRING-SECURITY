@@ -1,13 +1,15 @@
 package com.e_bank.controller;
 
 import com.e_bank.dto.UserDto;
+import com.e_bank.exception.DatabaseEmptyException;
+import com.e_bank.exception.UserNotFoundException;
+import com.e_bank.model.User;
 import com.e_bank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 @RestController
 @RequestMapping("user")
 public class UserController {
@@ -15,16 +17,21 @@ public class UserController {
     private UserService userService;
     @GetMapping("get-all")
     public ResponseEntity<?> getAll(){
-        var users = userService.getAll();
-        if (!users.isEmpty()){
-            return ResponseEntity.ok(userService.getAll());
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("no users found in database !");
+        try {
+            var users = userService.getAll();
+            return ResponseEntity.status(HttpStatus.FOUND).body(users);
+        } catch (DatabaseEmptyException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
     @GetMapping("get-by-id/{id}")
-    public ResponseEntity<UserDto> getById(@PathVariable Long id){
-        return ResponseEntity.status(HttpStatus.FOUND).body(userService.getById(id));
+    public ResponseEntity<?> getById(@PathVariable Long id){
+        try {
+            var user = userService.getById(id);
+            return ResponseEntity.status(HttpStatus.FOUND).body(user);
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
     @PostMapping("add")
     public ResponseEntity<UserDto> save(@RequestBody UserDto userDto){

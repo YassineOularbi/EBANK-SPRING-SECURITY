@@ -1,5 +1,6 @@
 package com.e_bank.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,9 +21,11 @@ public class Beneficiary {
     private String name;
     private String IBAN;
     private String bank;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "account_id", nullable = false)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "account_id")
     private Account account;
-    @OneToMany(mappedBy = "beneficiary", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "beneficiary", fetch = FetchType.EAGER)
     private List<Transaction> transactions;
 }
