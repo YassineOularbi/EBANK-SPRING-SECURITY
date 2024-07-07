@@ -12,33 +12,77 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Service layer for managing users in the E-Bank application.
+ */
 @Service
 @Transactional
 public class UserService {
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private UserMapper userMapper;
-    public List<User> getAll(){
+
+    /**
+     * Retrieves all users from the database.
+     *
+     * @return List of users
+     * @throws DatabaseEmptyException if no users are found
+     */
+    public List<User> getAll() {
         var users = userRepository.findAll();
-        if (users.isEmpty()){
+        if (users.isEmpty()) {
             throw new DatabaseEmptyException();
         }
         return users;
     }
+
+    /**
+     * Saves a new user.
+     *
+     * @param userDto User data to be saved
+     * @return Saved user DTO
+     */
     public UserDto save(UserDto userDto) {
         var user = userMapper.toUser(userDto);
         return userMapper.toUserDto(userRepository.save(user));
     }
-    public UserDto update(UserDto userDto, Long id) throws UserNotFoundException{
+
+    /**
+     * Updates an existing user.
+     *
+     * @param userDto User data to update
+     * @param id      ID of the user to update
+     * @return Updated user DTO
+     * @throws UserNotFoundException if the user with given ID is not found
+     */
+    public UserDto update(UserDto userDto, Long id) throws UserNotFoundException {
         var user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         var userUpdated = userMapper.updateUserFromDto(userDto, user);
         return userMapper.toUserDto(userRepository.save(userUpdated));
     }
-    public User getById(Long id) throws UserNotFoundException{
+
+    /**
+     * Retrieves a user by ID.
+     *
+     * @param id ID of the user to retrieve
+     * @return User entity
+     * @throws UserNotFoundException if the user with given ID is not found
+     */
+    public User getById(Long id) throws UserNotFoundException {
         return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
-    public UserDto delete(Long id) throws UserNotFoundException{
+
+    /**
+     * Deletes a user by ID.
+     *
+     * @param id ID of the user to delete
+     * @return Deleted user DTO
+     * @throws UserNotFoundException if the user with given ID is not found
+     */
+    public UserDto delete(Long id) throws UserNotFoundException {
         var user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         userRepository.delete(user);
         return userMapper.toUserDto(user);
