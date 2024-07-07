@@ -3,6 +3,7 @@ package com.e_bank.service;
 import com.e_bank.dto.UserDto;
 import com.e_bank.exception.UserNotFoundException;
 import com.e_bank.mapper.UserMapper;
+import com.e_bank.model.User;
 import com.e_bank.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,8 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private UserMapper userMapper;
-    public List<UserDto> getAll(){
-        return userMapper.toUserDtos(userRepository.findAll());
+    public List<User> getAll(){
+        return userRepository.findAll();
     }
     public UserDto save(UserDto userDto) {
         var user = userMapper.toUser(userDto);

@@ -14,8 +14,13 @@ public class UserController {
     @Autowired
     private UserService userService;
     @GetMapping("get-all")
-    public ResponseEntity<List<UserDto>> getAll(){
-        return ResponseEntity.ok(userService.getAll());
+    public ResponseEntity<?> getAll(){
+        var users = userService.getAll();
+        if (!users.isEmpty()){
+            return ResponseEntity.ok(userService.getAll());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("no users found in database !");
+        }
     }
     @GetMapping("get-by-id/{id}")
     public ResponseEntity<UserDto> getById(@PathVariable Long id){
