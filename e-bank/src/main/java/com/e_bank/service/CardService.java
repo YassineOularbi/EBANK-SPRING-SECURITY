@@ -4,6 +4,7 @@ import com.e_bank.dto.CardBlockingDto;
 import com.e_bank.dto.CardDto;
 import com.e_bank.dto.CardStatusDto;
 import com.e_bank.enums.NetworkType;
+import com.e_bank.exception.CardIsBlockedException;
 import com.e_bank.exception.CardNotFoundException;
 import com.e_bank.exception.DatabaseEmptyException;
 import com.e_bank.mapper.CardMapper;
@@ -63,11 +64,17 @@ public class CardService {
     public CardDto changeCardStatus(CardStatusDto cardDto, Long id){
         var card = cardRepository.findById(id).orElseThrow(CardNotFoundException::new);
         var cardUpdated = cardMapper.changeCardStatus(cardDto, card);
+        if (cardUpdated.getIsBlocked()){
+            throw new CardIsBlockedException();
+        }
         return cardMapper.toDto(cardRepository.save(cardUpdated));
     }
     public CardDto blockCard(CardBlockingDto cardDto, Long id){
         var card = cardRepository.findById(id).orElseThrow(CardNotFoundException::new);
         var cardUpdated = cardMapper.blockCard(cardDto, card);
+        if (cardUpdated.getIsBlocked()){
+            throw new CardIsBlockedException();
+        }
         cardUpdated.setIsActivated(false);
         cardUpdated.setIsBlocked(true);
         return cardMapper.toDto(cardRepository.save(cardUpdated));
