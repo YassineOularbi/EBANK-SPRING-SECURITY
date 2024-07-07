@@ -25,7 +25,7 @@ import java.util.List;
  * Service layer for managing transactions in the E-Bank application.
  */
 @Service
-public class TransactionService {
+public class inTransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
