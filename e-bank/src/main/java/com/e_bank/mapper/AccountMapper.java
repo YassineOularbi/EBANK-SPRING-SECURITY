@@ -13,6 +13,8 @@ import java.util.List;
 public interface AccountMapper {
     @Mapping(target = "user.id", source = "user_id")
     Account toAccount(AccountDto accountDto);
+
+    AccountClosingDto toDto(Account account);
     @Mapping(target = "user_id", source = "user.id")
     AccountDto toAccountDto(Account account);
     @Mapping(target = "user.id", source = "user_id")

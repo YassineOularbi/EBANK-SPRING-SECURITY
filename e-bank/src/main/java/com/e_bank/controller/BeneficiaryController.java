@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/beneficiary")
+@RequestMapping("/api/beneficiary")
 public class BeneficiaryController {
     @Autowired
     private BeneficiaryService beneficiaryService;
