@@ -70,4 +70,3 @@ Each class and method should have clear responsibilities documented, including d
 - Validation of amounts before transfers (e.g., positive amount, sufficient balance).
 
 ---
-
