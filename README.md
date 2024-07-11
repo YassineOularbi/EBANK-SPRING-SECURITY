@@ -1,72 +1,35 @@
-# E-Bank Application Backend
+# E-Bank Application Backend - PART II Spring Security
 
-Welcome to the backend repository for the E-Bank application developed for Bank Solutions. This application provides a secure and intuitive platform for users to manage their bank accounts and perform financial operations online.
+Ce projet consiste à sécuriser et déployer une application bancaire en utilisant Spring Boot, Spring Security et Docker.
 
-## User Stories
+## Contexte du projet
 
-### Account Management
+Vous êtes développeur junior au sein du service informatique de l'enseigne bancaire Bank Solutions. Votre tâche est de sécuriser et protéger l'application avec Spring Boot, et de la déployer en utilisant Docker.
 
-- **Create Bank Accounts**
-  As a user, I want to create a new bank account (checking, savings, etc.) to manage my finances.
-  - Account Type (Checking, Savings, etc.)
-  - Initial Balance
-  - Creation Date
+## Fonctionnalités
 
-- **View Balances and Transaction History**
-  As a user, I want to view the balance and transaction history of my accounts to track my expenses and income.
-  - Transaction ID
-  - Date and Time
-  - Amount
-  - Transaction Type (Credit, Debit)
-  - Description
+### Authentification avec Spring Security
 
-- **Close Accounts**
-  As a user, I want to close a bank account, specifying the reason for closure.
+#### Authentification des Utilisateurs
 
-### Card Management
+- Les utilisateurs doivent pouvoir s'authentifier via un nom d'utilisateur et un mot de passe.
+- Les mots de passe doivent être hachés avant d'être enregistrés dans la base de données.
+- Lors de l'authentification réussie, un JWT doit être généré et retourné à l'utilisateur.
+- L'utilisateur doit inclure le JWT token dans les en-têtes des requêtes ultérieures pour prouver son identité.
 
-- **View Card Information**
-  As a user, I want to view my card details (number, expiration date) to know the specifics of my card.
-  - Card Number
-  - Expiration Date
-  - Card Type (Debit, Credit)
+#### Protection des Endpoints API
 
-- **Activate and Deactivate Cards**
-  As a user, I want to activate or deactivate my card for transaction security.
+- Contrôle d'accès basé sur les rôles pour différentes fonctionnalités (consultation de solde, transfert d'argent, etc.).
 
-- **Block Lost or Stolen Cards**
-  As a user, I want to block my card in case of loss or theft to prevent unauthorized use, specifying the reason for blocking.
+### Déploiement avec Docker
 
-### Money Transfers
+#### Dockerisation de l'Application
 
-- **Internal Transfers between Accounts**
-  As a user, I want to transfer money between my own accounts, specifying the amount and description.
+- Créer un fichier Dockerfile pour containeriser l'application Spring Boot.
+- Tester votre application (docker container) après le déploiement.
 
-- **External Transfers to Other Banks**
-  As a user, I want to transfer money to external accounts for payments or money transfers.
-  - External Account Details (Account Number, Bank Details, etc.)
-  - Amount
-  - Description
+## Prérequis
 
-- **Manage Payees**
-  As a user, I want to add, modify, or delete payees to facilitate external transfers.
-  - Payee Name
-  - Payee Account Details (Account Number, Bank Details, etc.)
-
-## Technical Requirements
-
-### Project Structure
-
-The project structure follows recommended practices for a Spring Boot application.
-
-### Code Documentation
-
-Each class and method should have clear responsibilities documented, including details on parameters and return values.
-
-### Business Logic for Banking Operations
-
-- Data validation during account creation and closure (e.g., sufficient balance before closure).
-- Exception handling for illegal operations (e.g., attempting to transfer from a closed account).
-- Validation of amounts before transfers (e.g., positive amount, sufficient balance).
-
----
+- Java 17
+- Maven 3.x
+- Docker
