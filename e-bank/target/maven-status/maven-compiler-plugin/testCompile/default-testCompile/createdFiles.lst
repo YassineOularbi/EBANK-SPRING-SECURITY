@@ -1,0 +1,6 @@
+com\e_bank\AccountServiceTests.class
+com\e_bank\CardServiceTests.class
+com\e_bank\BeneficiaryServiceTests.class
+com\e_bank\EBankApplicationTests.class
+com\e_bank\TransactionServiceTests.class
+com\e_bank\UserServiceTests.class
