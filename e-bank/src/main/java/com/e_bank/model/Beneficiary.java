@@ -26,6 +26,6 @@ public class Beneficiary {
     @JoinColumn(name = "account_id")
     private Account account;
     @JsonIgnore
-    @OneToMany(mappedBy = "beneficiary", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "beneficiary", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Transaction> transactions;
 }

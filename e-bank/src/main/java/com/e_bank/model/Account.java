@@ -30,10 +30,10 @@ public class Account {
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Card> cards;
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Transaction> transactions;
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Beneficiary> beneficiaries;
 }

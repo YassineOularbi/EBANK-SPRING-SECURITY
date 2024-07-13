@@ -38,6 +38,6 @@ public class Card {
     @JoinColumn(name = "account_id")
     private Account account;
     @JsonIgnore
-    @OneToMany(mappedBy = "card", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "card", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Transaction> transactions;
 }
