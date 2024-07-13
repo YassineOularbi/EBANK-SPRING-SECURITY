@@ -172,6 +172,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>ebank-application</finalName>
 	</build>
 
 </project>

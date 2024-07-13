@@ -27,9 +27,9 @@ public class UserController {
     }
 
     @GetMapping("/get-by-id/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id) {
+    public ResponseEntity<?> getById(@PathVariable("id") String id) {
         try {
-            var user = userService.getById(id);
+            var user = userService.getById(Long.valueOf(id));
             return ResponseEntity.ok(user);
         } catch (UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -43,9 +43,9 @@ public class UserController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody UserDto userDto) {
+    public ResponseEntity<?> update(@PathVariable("id") String id, @RequestBody UserDto userDto) {
         try {
-            var updatedUser = userService.update(userDto, id);
+            var updatedUser = userService.update(userDto, Long.valueOf(id));
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedUser);
         } catch (UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -53,9 +53,9 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable("id") String id) {
         try {
-            var deletedUser = userService.delete(id);
+            var deletedUser = userService.delete(Long.valueOf(id));
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(deletedUser);
         } catch (UserNotFoundException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

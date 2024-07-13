@@ -20,9 +20,9 @@ public class CardController {
     private CardService cardService;
 
     @GetMapping("/get-cards-by-account/{id}")
-    public ResponseEntity<?> getAllByAccount(@PathVariable Long id) {
+    public ResponseEntity<?> getAllByAccount(@PathVariable("id") String id) {
         try {
-            var cards = cardService.getAllByAccount(id);
+            var cards = cardService.getAllByAccount(Long.valueOf(id));
             return ResponseEntity.ok(cards);
         } catch (DatabaseEmptyException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -30,9 +30,9 @@ public class CardController {
     }
 
     @GetMapping("/get-by-id/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id) {
+    public ResponseEntity<?> getById(@PathVariable("id") String id) {
         try {
-            var card = cardService.getById(id);
+            var card = cardService.getById(Long.valueOf(id));
             return ResponseEntity.ok(card);
         } catch (CardNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -46,9 +46,9 @@ public class CardController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable("id") String id) {
         try {
-            var deletedCard = cardService.delete(id);
+            var deletedCard = cardService.delete(Long.valueOf(id));
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(deletedCard);
         } catch (CardNotFoundException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -56,9 +56,9 @@ public class CardController {
     }
 
     @PutMapping("/activate-deactivate/{id}")
-    public ResponseEntity<?> changeCardStatus(@RequestBody CardStatusDto cardDto, @PathVariable Long id) {
+    public ResponseEntity<?> changeCardStatus(@RequestBody CardStatusDto cardDto, @PathVariable("id") String id) {
         try {
-            var updatedCard = cardService.changeCardStatus(cardDto, id);
+            var updatedCard = cardService.changeCardStatus(cardDto, Long.valueOf(id));
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedCard);
         } catch (CardIsBlockedException | CardNotFoundException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -66,9 +66,9 @@ public class CardController {
     }
 
     @PutMapping("/block/{id}")
-    public ResponseEntity<?> blockCard(@RequestBody CardBlockingDto cardDto, @PathVariable Long id) {
+    public ResponseEntity<?> blockCard(@RequestBody CardBlockingDto cardDto, @PathVariable("id") String id) {
         try {
-            var blockedCard = cardService.blockCard(cardDto, id);
+            var blockedCard = cardService.blockCard(cardDto, Long.valueOf(id));
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(blockedCard);
         } catch (CardIsBlockedException | CardNotFoundException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

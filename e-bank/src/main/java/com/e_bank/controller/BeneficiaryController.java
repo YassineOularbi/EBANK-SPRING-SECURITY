@@ -16,9 +16,9 @@ public class BeneficiaryController {
     private BeneficiaryService beneficiaryService;
 
     @GetMapping("/get-all-beneficiary-by-account/{id}")
-    public ResponseEntity<?> getAllByAccount(@PathVariable Long id) {
+    public ResponseEntity<?> getAllByAccount(@PathVariable("id") String id) {
         try {
-            var beneficiaries = beneficiaryService.getAllByAccount(id);
+            var beneficiaries = beneficiaryService.getAllByAccount(Long.valueOf(id));
             return ResponseEntity.ok(beneficiaries);
         } catch (DatabaseEmptyException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -26,9 +26,9 @@ public class BeneficiaryController {
     }
 
     @GetMapping("/get-by-id/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id) {
+    public ResponseEntity<?> getById(@PathVariable("id") String id) {
         try {
-            var beneficiary = beneficiaryService.getById(id);
+            var beneficiary = beneficiaryService.getById(Long.valueOf(id));
             return ResponseEntity.ok(beneficiary);
         } catch (BeneficiaryNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -42,9 +42,9 @@ public class BeneficiaryController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@RequestBody BeneficiaryDto beneficiaryDto, @PathVariable Long id) {
+    public ResponseEntity<?> update(@RequestBody BeneficiaryDto beneficiaryDto, @PathVariable("id") String id) {
         try {
-            var updatedBeneficiary = beneficiaryService.update(beneficiaryDto, id);
+            var updatedBeneficiary = beneficiaryService.update(beneficiaryDto, Long.valueOf(id));
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedBeneficiary);
         } catch (BeneficiaryNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -52,9 +52,9 @@ public class BeneficiaryController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable("id") String id) {
         try {
-            var deletedBeneficiary = beneficiaryService.delete(id);
+            var deletedBeneficiary = beneficiaryService.delete(Long.valueOf(id));
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(deletedBeneficiary);
         } catch (BeneficiaryNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

@@ -15,9 +15,9 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
     @PostMapping("internal-transaction/{creditId}&{debitId}")
-    public ResponseEntity<?> internalTransaction(@RequestBody TransactionDto transactionDto, @PathVariable Long creditId, @PathVariable Long debitId){
+    public ResponseEntity<?> internalTransaction(@RequestBody TransactionDto transactionDto, @PathVariable("creditId") String creditId, @PathVariable("debitId") String debitId){
         try {
-            var transactions = transactionService.internalTransaction(transactionDto, creditId, debitId);
+            var transactions = transactionService.internalTransaction(transactionDto, Long.valueOf(creditId), Long.valueOf(debitId));
             return ResponseEntity.status(HttpStatus.CREATED).body(transactions);
         } catch (InsufficientBalanceException | AccountIsClosedException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -27,9 +27,9 @@ public class TransactionController {
 
     }
     @PostMapping("external-transaction/{accountId}&{beneficiaryId}")
-    public ResponseEntity<?> externalTransaction(@RequestBody TransactionDto transactionDto, @PathVariable Long accountId, @PathVariable Long beneficiaryId){
+    public ResponseEntity<?> externalTransaction(@RequestBody TransactionDto transactionDto, @PathVariable("accountId") String accountId, @PathVariable("beneficiaryId") String beneficiaryId){
         try {
-            var transaction = transactionService.externalTransaction(transactionDto, accountId, beneficiaryId);
+            var transaction = transactionService.externalTransaction(transactionDto, Long.valueOf(accountId), Long.valueOf(beneficiaryId));
             return ResponseEntity.status(HttpStatus.CREATED).body(transaction);
         } catch (InsufficientBalanceException | AccountIsClosedException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -39,9 +39,9 @@ public class TransactionController {
 
     }
     @PostMapping("card-transaction/{cardId}&{beneficiaryId}")
-    public ResponseEntity<?> cardTransaction(@RequestBody TransactionDto transactionDto, @PathVariable Long cardId, @PathVariable Long beneficiaryId){
+    public ResponseEntity<?> cardTransaction(@RequestBody TransactionDto transactionDto, @PathVariable("cardId") String cardId, @PathVariable("beneficiaryId") String beneficiaryId){
         try {
-           var card = transactionService.cardTransaction(transactionDto, cardId, beneficiaryId);
+           var card = transactionService.cardTransaction(transactionDto, Long.valueOf(cardId), Long.valueOf(beneficiaryId));
             return ResponseEntity.status(HttpStatus.CREATED).body(card);
         } catch (InsufficientBalanceException | AccountIsClosedException | CardIsBlockedException | CardDeactivatedException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -50,18 +50,18 @@ public class TransactionController {
         }
     }
     @GetMapping("get-transactions-by-account/{id}")
-    public ResponseEntity<?> getAllByAccount(@PathVariable Long id){
+    public ResponseEntity<?> getAllByAccount(@PathVariable("id") String id){
         try {
-            var transactions = transactionService.getAllByAccount(id);
+            var transactions = transactionService.getAllByAccount(Long.valueOf(id));
             return ResponseEntity.ok(transactions);
         } catch (DatabaseEmptyException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
     @GetMapping("get-by-id/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id){
+    public ResponseEntity<?> getById(@PathVariable("id") String id){
         try {
-            var transaction = transactionService.getById(id);
+            var transaction = transactionService.getById(Long.valueOf(id));
             return ResponseEntity.ok(transaction);
         } catch (TransactionNotFoundException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

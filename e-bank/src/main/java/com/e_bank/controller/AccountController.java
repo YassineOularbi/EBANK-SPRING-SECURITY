@@ -20,9 +20,9 @@ public class AccountController {
     private AccountService accountService;
 
     @GetMapping("/get-by-id/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id) {
+    public ResponseEntity<?> getById(@PathVariable("id") String id) {
         try {
-            var account = accountService.getById(id);
+            var account = accountService.getById(Long.valueOf(id));
             return ResponseEntity.ok(account);
         } catch (AccountNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -30,9 +30,9 @@ public class AccountController {
     }
 
     @GetMapping("/get-all-by-user/{id}")
-    public ResponseEntity<?> getAllByUser(@PathVariable Long id) {
+    public ResponseEntity<?> getAllByUser(@PathVariable("id") String id) {
         try {
-            var accounts = accountService.getAllByUser(id);
+            var accounts = accountService.getAllByUser(Long.valueOf(id));
             return ResponseEntity.ok(accounts);
         } catch (DatabaseEmptyException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -46,9 +46,9 @@ public class AccountController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@RequestBody AccountDto accountDto, @PathVariable Long id) {
+    public ResponseEntity<?> update(@RequestBody AccountDto accountDto, @PathVariable("id") String id) {
         try {
-            var updatedAccount = accountService.update(accountDto, id);
+            var updatedAccount = accountService.update(accountDto, Long.valueOf(id));
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedAccount);
         } catch (AccountNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -56,9 +56,9 @@ public class AccountController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable("id") String id) {
         try {
-            var deletedAccount = accountService.delete(id);
+            var deletedAccount = accountService.delete(Long.valueOf(id));
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(deletedAccount);
         } catch (AccountNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -66,9 +66,9 @@ public class AccountController {
     }
 
     @PutMapping("/close-account/{id}")
-    public ResponseEntity<?> close(@PathVariable Long id, @RequestBody AccountClosingDto accountDto) {
+    public ResponseEntity<?> close(@PathVariable("id") String id, @RequestBody AccountClosingDto accountDto) {
         try {
-            var closedAccount = accountService.close(accountDto, id);
+            var closedAccount = accountService.close(accountDto, Long.valueOf(id));
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(closedAccount);
         } catch (InsufficientBalanceException | AccountIsClosedException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
