@@ -39,7 +39,7 @@ public class AuthService {
                 new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername(), authRequestDTO.getPassword())
         );
         if (authentication.isAuthenticated()) {
-            return JwtResponseDTO.builder().accessToken(jwtService.GenerateToken(authRequestDTO.getUsername())).build();
+            return JwtResponseDTO.builder().accessToken(jwtService.generateToken(authRequestDTO.getUsername())).build();
         } else {
             throw new UsernameNotFoundException("Invalid user request..!!");
         }
@@ -60,6 +60,6 @@ public class AuthService {
         }
         var user = userMapper.toUser(userRequest);
         user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
-        return JwtResponseDTO.builder().accessToken(jwtService.GenerateToken(userRepository.save(user).getUsername())).build();
+        return JwtResponseDTO.builder().accessToken(jwtService.generateToken(userRepository.save(user).getUsername())).build();
     }
 }
