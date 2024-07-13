@@ -16,6 +16,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+/**
+ * Filtre de sécurité JWT pour valider les requêtes HTTP et authentifier les utilisateurs.
+ */
 @Component
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
@@ -24,17 +27,29 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
 
+    /**
+     * Filtre les requêtes HTTP pour vérifier le jeton JWT et authentifier les utilisateurs.
+     *
+     * @param request la requête HTTP.
+     * @param response la réponse HTTP.
+     * @param filterChain la chaîne de filtres.
+     * @throws ServletException si une erreur de servlet survient.
+     * @throws IOException si une erreur d'IO survient.
+     */
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
 
         String authHeader = request.getHeader("Authorization");
         String token = null;
         String username = null;
+
+        // Vérifie le header Authorization et extrait le jeton JWT
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             token = authHeader.substring(7);
             username = jwtService.extractUsername(token);
         }
 
+        // Si le jeton est valide, charge les détails de l'utilisateur et configure l'authentification
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             if (jwtService.validateToken(token, userDetails)) {
@@ -44,6 +59,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }
         }
 
+        // Continue le filtrage de la requête
         filterChain.doFilter(request, response);
     }
 }
