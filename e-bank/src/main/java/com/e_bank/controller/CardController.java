@@ -7,17 +7,17 @@ import com.e_bank.exception.CardIsBlockedException;
 import com.e_bank.exception.CardNotFoundException;
 import com.e_bank.exception.DatabaseEmptyException;
 import com.e_bank.service.CardService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/card")
+@RequiredArgsConstructor
 public class CardController {
 
-    @Autowired
-    private CardService cardService;
+    private final CardService cardService;
 
     @GetMapping("/get-cards-by-account/{id}")
     public ResponseEntity<?> getAllByAccount(@PathVariable("id") String id) {

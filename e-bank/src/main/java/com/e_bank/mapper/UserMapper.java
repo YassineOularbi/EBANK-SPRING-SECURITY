@@ -2,8 +2,7 @@ package com.e_bank.mapper;
 
 import com.e_bank.dto.UserDto;
 import com.e_bank.model.User;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 
 import java.util.List;
 

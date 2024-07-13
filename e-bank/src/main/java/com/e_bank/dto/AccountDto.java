@@ -1,15 +1,13 @@
 package com.e_bank.dto;
 
 import com.e_bank.enums.AccountType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class AccountDto {
     private AccountType type;
     private Double balance;

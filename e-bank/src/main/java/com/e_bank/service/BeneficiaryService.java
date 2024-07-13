@@ -1,12 +1,10 @@
 package com.e_bank.service;
 
 import com.e_bank.dto.BeneficiaryDto;
-import com.e_bank.exception.BeneficiaryNotFoundException;
-import com.e_bank.exception.DatabaseEmptyException;
+import com.e_bank.exception.*;
 import com.e_bank.mapper.BeneficiaryMapper;
-import com.e_bank.model.Beneficiary;
 import com.e_bank.repository.BeneficiaryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,13 +13,12 @@ import java.util.List;
  * Service layer for managing beneficiaries in the E-Bank application.
  */
 @Service
+@RequiredArgsConstructor
 public class BeneficiaryService {
 
-    @Autowired
-    private BeneficiaryRepository beneficiaryRepository;
+    private final BeneficiaryRepository beneficiaryRepository;
 
-    @Autowired
-    private BeneficiaryMapper beneficiaryMapper;
+    private final BeneficiaryMapper beneficiaryMapper;
 
     /**
      * Retrieves all beneficiaries associated with a specific account.

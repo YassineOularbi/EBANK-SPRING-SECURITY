@@ -1,45 +1,35 @@
 package com.e_bank.service;
 
 import com.e_bank.dto.TransactionDto;
-import com.e_bank.enums.TransactionContext;
-import com.e_bank.enums.TransactionMethod;
-import com.e_bank.enums.TransactionType;
+import com.e_bank.enums.*;
 import com.e_bank.exception.*;
 import com.e_bank.mapper.TransactionMapper;
 import com.e_bank.model.Transaction;
-import com.e_bank.repository.AccountRepository;
-import com.e_bank.repository.BeneficiaryRepository;
-import com.e_bank.repository.CardRepository;
-import com.e_bank.repository.TransactionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.e_bank.repository.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.*;
+import java.util.*;
 
 /**
  * Service layer for managing transactions in the E-Bank application.
  */
 @Service
+@RequiredArgsConstructor
 public class TransactionService {
-    @Autowired
-    private TransactionRepository transactionRepository;
 
-    @Autowired
-    private AccountRepository accountRepository;
+    private final TransactionRepository transactionRepository;
 
-    @Autowired
-    private BeneficiaryRepository beneficiaryRepository;
+    private final AccountRepository accountRepository;
 
-    @Autowired
-    private CardRepository cardRepository;
+    private final BeneficiaryRepository beneficiaryRepository;
 
-    @Autowired
-    private TransactionMapper transactionMapper;
+    private final CardRepository cardRepository;
+
+    private final TransactionMapper transactionMapper;
 
     /**
      * Retrieves a transaction by ID.

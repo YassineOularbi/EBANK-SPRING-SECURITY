@@ -1,14 +1,9 @@
 package com.e_bank.model;
 
-import com.e_bank.enums.TransactionContext;
-import com.e_bank.enums.TransactionMethod;
-import com.e_bank.enums.TransactionType;
+import com.e_bank.enums.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -17,6 +12,7 @@ import java.sql.Time;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

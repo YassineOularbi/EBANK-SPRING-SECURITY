@@ -1,22 +1,11 @@
 package com.e_bank.service;
 
-import com.e_bank.dto.AuthRequestDTO;
-import com.e_bank.dto.JwtResponseDTO;
 import com.e_bank.dto.UserDto;
-import com.e_bank.exception.DatabaseEmptyException;
-import com.e_bank.exception.UserNotFoundException;
+import com.e_bank.exception.*;
 import com.e_bank.mapper.UserMapper;
 import com.e_bank.model.User;
 import com.e_bank.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,11 +19,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private UserMapper userMapper;
+    private final UserMapper userMapper;
 
 
     /**

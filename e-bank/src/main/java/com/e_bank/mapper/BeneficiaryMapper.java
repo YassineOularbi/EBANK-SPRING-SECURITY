@@ -2,9 +2,7 @@ package com.e_bank.mapper;
 
 import com.e_bank.dto.BeneficiaryDto;
 import com.e_bank.model.Beneficiary;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 
 import java.util.List;
 

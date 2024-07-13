@@ -1,16 +1,12 @@
 package com.e_bank.service;
 
-import com.e_bank.dto.CardBlockingDto;
-import com.e_bank.dto.CardDto;
-import com.e_bank.dto.CardStatusDto;
+import com.e_bank.dto.*;
 import com.e_bank.enums.NetworkType;
-import com.e_bank.exception.CardIsBlockedException;
-import com.e_bank.exception.CardNotFoundException;
-import com.e_bank.exception.DatabaseEmptyException;
+import com.e_bank.exception.*;
 import com.e_bank.mapper.CardMapper;
 import com.e_bank.model.Card;
 import com.e_bank.repository.CardRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -24,13 +20,12 @@ import static net.andreinc.mockneat.unit.financial.CreditCards.creditCards;
  * Service layer for managing cards in the E-Bank application.
  */
 @Service
+@RequiredArgsConstructor
 public class CardService {
 
-    @Autowired
-    private CardRepository cardRepository;
+    private final CardRepository cardRepository;
 
-    @Autowired
-    private CardMapper cardMapper;
+    private final CardMapper cardMapper;
 
     /**
      * Retrieves all cards associated with an account.

@@ -3,6 +3,7 @@ package com.e_bank.controller;
 import com.e_bank.dto.TransactionDto;
 import com.e_bank.exception.*;
 import com.e_bank.service.TransactionService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/transaction")
+@RequiredArgsConstructor
 public class TransactionController {
-    @Autowired
-    private TransactionService transactionService;
+
+    private final TransactionService transactionService;
     @PostMapping("internal-transaction/{creditId}&{debitId}")
     public ResponseEntity<?> internalTransaction(@RequestBody TransactionDto transactionDto, @PathVariable("creditId") String creditId, @PathVariable("debitId") String debitId){
         try {

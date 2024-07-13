@@ -1,17 +1,11 @@
 package com.e_bank.service;
 
-import com.e_bank.dto.AccountClosingDto;
-import com.e_bank.dto.AccountDto;
-import com.e_bank.dto.CardBlockingDto;
-import com.e_bank.exception.AccountIsClosedException;
-import com.e_bank.exception.AccountNotFoundException;
-import com.e_bank.exception.DatabaseEmptyException;
-import com.e_bank.exception.InsufficientBalanceException;
+import com.e_bank.dto.*;
+import com.e_bank.exception.*;
 import com.e_bank.mapper.AccountMapper;
 import com.e_bank.model.Account;
-import com.e_bank.repository.AccountRepository;
-import com.e_bank.repository.CardRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.e_bank.repository.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -24,19 +18,16 @@ import static net.andreinc.mockneat.unit.financial.IBANs.ibans;
  * Service layer for managing accounts in the E-Bank application.
  */
 @Service
+@RequiredArgsConstructor
 public class AccountService {
 
-    @Autowired
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
-    @Autowired
-    private CardRepository cardRepository;
+    private final CardRepository cardRepository;
 
-    @Autowired
-    private CardService cardService;
+    private final CardService cardService;
 
-    @Autowired
-    private AccountMapper accountMapper;
+    private final AccountMapper accountMapper;
 
     /**
      * Retrieves all accounts associated with a user.

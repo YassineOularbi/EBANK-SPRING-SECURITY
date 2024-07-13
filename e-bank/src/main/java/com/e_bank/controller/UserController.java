@@ -4,17 +4,18 @@ import com.e_bank.dto.UserDto;
 import com.e_bank.exception.DatabaseEmptyException;
 import com.e_bank.exception.UserNotFoundException;
 import com.e_bank.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/user")
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping("/get-all")
     public ResponseEntity<?> getAll() {

@@ -7,17 +7,17 @@ import com.e_bank.exception.AccountNotFoundException;
 import com.e_bank.exception.DatabaseEmptyException;
 import com.e_bank.exception.InsufficientBalanceException;
 import com.e_bank.service.AccountService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/account")
+@RequiredArgsConstructor
 public class AccountController {
 
-    @Autowired
-    private AccountService accountService;
+    private final AccountService accountService;
 
     @GetMapping("/get-by-id/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") String id) {

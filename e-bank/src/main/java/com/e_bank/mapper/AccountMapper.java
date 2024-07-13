@@ -1,11 +1,8 @@
 package com.e_bank.mapper;
 
-import com.e_bank.dto.AccountClosingDto;
-import com.e_bank.dto.AccountDto;
+import com.e_bank.dto.*;
 import com.e_bank.model.Account;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 
 import java.util.List;
 

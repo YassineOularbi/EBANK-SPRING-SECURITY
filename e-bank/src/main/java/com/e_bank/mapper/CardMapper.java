@@ -1,12 +1,8 @@
 package com.e_bank.mapper;
 
-import com.e_bank.dto.CardBlockingDto;
-import com.e_bank.dto.CardDto;
-import com.e_bank.dto.CardStatusDto;
+import com.e_bank.dto.*;
 import com.e_bank.model.Card;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 
 import java.util.List;
 

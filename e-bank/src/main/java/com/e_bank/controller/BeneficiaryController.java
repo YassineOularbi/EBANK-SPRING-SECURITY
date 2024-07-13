@@ -4,16 +4,17 @@ import com.e_bank.dto.BeneficiaryDto;
 import com.e_bank.exception.BeneficiaryNotFoundException;
 import com.e_bank.exception.DatabaseEmptyException;
 import com.e_bank.service.BeneficiaryService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/beneficiary")
+@RequiredArgsConstructor
 public class BeneficiaryController {
-    @Autowired
-    private BeneficiaryService beneficiaryService;
+
+    private final BeneficiaryService beneficiaryService;
 
     @GetMapping("/get-all-beneficiary-by-account/{id}")
     public ResponseEntity<?> getAllByAccount(@PathVariable("id") String id) {
