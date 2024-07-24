@@ -38,9 +38,8 @@ public class TransactionService {
      * @return TransactionDto
      * @throws TransactionNotFoundException if the transaction with given ID is not found
      */
-    public TransactionDto getById(Long id){
-        var transaction = transactionRepository.findById(id).orElseThrow(TransactionNotFoundException::new);
-        return transactionMapper.toDto(transaction);
+    public Transaction getById(Long id){
+        return transactionRepository.findById(id).orElseThrow(TransactionNotFoundException::new);
     }
 
     /**
@@ -49,8 +48,8 @@ public class TransactionService {
      * @param id ID of the account
      * @return List of TransactionDto
      */
-    public List<TransactionDto> getAllByAccount(Long id){
-        return transactionMapper.toDtos(transactionRepository.findAllByAccount_Id(id));
+    public List<Transaction> getAllByAccount(Long id){
+        return transactionRepository.findAllByAccount_Id(id);
     }
 
     /**

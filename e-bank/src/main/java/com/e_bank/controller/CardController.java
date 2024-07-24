@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/card")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class CardController {
 
     private final CardService cardService;

@@ -7,11 +7,13 @@ import com.e_bank.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class UserController {
 
     private final UserService userService;
@@ -21,6 +23,7 @@ public class UserController {
      *
      * @return ResponseEntity with the list of users or status 404 if no users found.
      */
+
     @GetMapping("/get-all")
     public ResponseEntity<?> getAll() {
         try {

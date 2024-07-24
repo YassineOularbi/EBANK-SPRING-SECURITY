@@ -1,6 +1,7 @@
 package com.e_bank.auth;
 
 import com.e_bank.dto.*;
+import com.e_bank.exception.UserNotFoundException;
 import com.e_bank.mapper.UserMapper;
 import com.e_bank.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +40,7 @@ public class AuthService {
                 new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername(), authRequestDTO.getPassword())
         );
         if (authentication.isAuthenticated()) {
-            return JwtResponseDTO.builder().accessToken(jwtService.generateToken(authRequestDTO.getUsername())).build();
+            return JwtResponseDTO.builder().accessToken(jwtService.generateToken(authRequestDTO.getUsername())).user(userRepository.findByUsername(authRequestDTO.getUsername()).orElseThrow(UserNotFoundException::new)).build();
         } else {
             throw new UsernameNotFoundException("Invalid user request..!!");
         }

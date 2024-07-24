@@ -3,6 +3,7 @@ package com.e_bank.service;
 import com.e_bank.dto.BeneficiaryDto;
 import com.e_bank.exception.*;
 import com.e_bank.mapper.BeneficiaryMapper;
+import com.e_bank.model.Beneficiary;
 import com.e_bank.repository.BeneficiaryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,12 +28,12 @@ public class BeneficiaryService {
      * @return List of BeneficiaryDto
      * @throws DatabaseEmptyException if no beneficiaries are found for the account
      */
-    public List<BeneficiaryDto> getAllByAccount(Long id) {
+    public List<Beneficiary> getAllByAccount(Long id) {
         var beneficiaries = beneficiaryRepository.findAllByAccount_Id(id);
         if (beneficiaries.isEmpty()) {
             throw new DatabaseEmptyException();
         }
-        return beneficiaryMapper.toDtos(beneficiaries);
+        return beneficiaries;
     }
 
     /**
@@ -67,9 +68,9 @@ public class BeneficiaryService {
      * @return BeneficiaryDto
      * @throws BeneficiaryNotFoundException if the beneficiary with given ID is not found
      */
-    public BeneficiaryDto getById(Long id) {
+    public Beneficiary getById(Long id) {
         var beneficiary = beneficiaryRepository.findById(id).orElseThrow(BeneficiaryNotFoundException::new);
-        return beneficiaryMapper.toDto(beneficiary);
+        return beneficiary;
     }
 
     /**

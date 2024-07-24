@@ -22,7 +22,6 @@ public class Beneficiary {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "account_id")
     private Account account;
-    @JsonIgnore
     @OneToMany(mappedBy = "beneficiary", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Transaction> transactions;
 }
